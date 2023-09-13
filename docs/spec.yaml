@@ -1,0 +1,66 @@
+openapi: 3.0.3
+info:
+  title: Order API v1
+  version: 1.0.0
+  # description: Order API for checking orders
+  contact:
+    name: API Team
+    email: api@team.com
+servers:
+  - url: 'https://api-team.com/order-management/v1'
+    description: Production environment
+tags:
+  - name: Orders
+    description: Orders Resources
+security:
+  - api_key: []
+paths:
+
+  /orders/{orderId}:
+    x-controller: orders/router
+    get:
+      summary: Retrieve an order by number
+      description: Retrieve an order by ID
+      operationId: getOrder
+      tags:
+        - Orders
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          description: The unique ID of the order
+          example: 1234567890
+          schema:
+            type: integer
+            
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  orderId: 
+                    type: number
+                    # maxLength: 10
+                    description: The unique ID of the order
+                    example: 1234567890
+                  customer: 
+                    type: string
+                    # maxLength: 1000
+                    description: The name of the customer
+                    example: "1234567890"
+                  numberOfProductsInOrder: 
+                    type: number
+                    description: The number of products in the order 
+                    example: 10
+
+components:
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-apikey
+      in: header
